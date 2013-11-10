@@ -1,0 +1,4 @@
+0.1.1
+	fixed release variable not being initialized (thus crashing)
+0.1.2
+	Added locales
