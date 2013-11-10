@@ -2,3 +2,5 @@
 	fixed release variable not being initialized (thus crashing)
 0.1.2
 	Added locales
+0.1.3
+	Added ability for enemies to 'surrender' (upon unit-spawner death there is a chance for it to respawn as player force, nearby enemies will also 'surrender')

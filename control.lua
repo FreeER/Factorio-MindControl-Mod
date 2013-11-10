@@ -4,8 +4,9 @@ require "defines"
 game.oninit(function()
 glob.beacons = {}
 glob.minds = {}
+glob.hiveminds = {} --bases
 glob.minds.difficulty = false -- change to always use easy calculation
-glob.beacons.release = true -- boolean used for easily testing mod during developement, false gives free items oninit and possibly debug statements
+glob.beacons.release = false -- boolean used for easily testing mod during developement, false gives free items oninit and possibly debug statements
 
 if glob.minds.difficulty or (game.difficulty == defines.difficulty.easy) then
   glob.minds.difficulty = 3 -- easy difficulty
@@ -23,9 +24,35 @@ game.onevent(defines.events.onentitydied, function(event)
   if event.entity.name == "MBeacon" then
     beaconremove()
   end
+  if event.entity.type == "unit-spawner" and event.entity.force.equals(game.forces.enemy) then
+    local enemies=getboundingbox(event.entity.position, 10/game.difficulty)
+    local units={}
+    local hives={}
+    local worms={}
+    local count=0
+    enemies = game.findentities(enemies)
+    for i, enemy in ipairs(enemies) do
+      if enemy.type=="turret" and enemy.force.equals(game.forces.enemy) then
+        table.insert(worms, enemy)
+      elseif enemy.type=="unit-spawner" then
+        table.insert(hives, enemy)
+      elseif enemy.type=="unit" then
+        table.insert(units, enemy)
+      end
+    end
+    count=#units+#hives+#worms
+    game.player.print(count)
+    game.player.print(math.random(game.difficulty+math.pow(count, 1/4)))
+    if math.random(game.difficulty+math.sqrt(count))==1 then
+      table.insert(glob.hiveminds, game.createentity{name=event.entity.name, position=event.entity.position, force=game.player.force})
+      for _, worm in pairs(worms) do worm.force=game.player.force end
+      for _, hive in pairs(hives) do hive.force=game.player.force table.insert(glob.hiveminds, hive) end
+      for _, unit in pairs(units) do unit.force=game.player.force unit.setcommand{type=defines.command.wander, distraction=defines.distraction.byenemy} end
+    end
+  end
 end)
 
-game.onevent(defines.events. onplayermineditem, function(event)
+game.onevent(defines.events.onplayermineditem, function(event)
   if event.itemstack.name=="MBeacon" then
     beaconremove()
   end
@@ -93,4 +120,9 @@ function removemindcontrol()
       end
     end
   end
+end
+
+
+function getboundingbox(position, radius)
+return {{position.x-radius, position.y-radius}, {position.x+radius,position.y+radius}}
 end
