@@ -22,9 +22,9 @@ data:extend({
     energy_source =
     {
       type = "electric",
-      input_priority = "secondary"
+      input_priority = "secondary",
+      energy_usage_per_tick = 10
     },
-    energy_usage_per_tick = 10,
     pictures =
     {
       filename = "__mindcontrol__/graphics/entity/MBeacon.png",
