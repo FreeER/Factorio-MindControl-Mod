@@ -23,8 +23,8 @@ data:extend({
     {
       type = "electric",
       input_priority = "secondary",
-      energy_usage_per_tick = 10
     },
+    energy_usage = "600W",
     pictures =
     {
       filename = "__mindcontrol__/graphics/entity/MBeacon.png",
