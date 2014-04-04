@@ -1,8 +1,8 @@
 {
   "name": "mindcontrol",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "title": "Mind Control Mod",
   "author": "FreeER",
   "description": "Adds beacon that can control biter minds :)",
-  "dependencies": ["base >= 0.7.4"]
+  "dependencies": ["base >= 0.7.4", "? dna"]
 }

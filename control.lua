@@ -6,7 +6,7 @@ glob.beacons = {}
 glob.minds = {}
 glob.hiveminds = {} --bases
 glob.minds.difficulty = false -- change to always use easy calculation
-glob.beacons.release = false -- boolean used for easily testing mod during developement, false gives free items oninit and possibly debug statements
+glob.beacons.release = true -- boolean used for easily testing mod during developement, false gives free items oninit and possibly debug statements
 
 if glob.minds.difficulty or (game.difficulty == defines.difficulty.easy) then
   glob.minds.difficulty = 3 -- easy difficulty
@@ -41,9 +41,11 @@ game.onevent(defines.events.onentitydied, function(event)
       end
     end
     count=#units+#hives+#worms
-    game.player.print(count)
-    game.player.print(math.random(game.difficulty+math.pow(count, 1/4)))
-    if math.random(game.difficulty+math.sqrt(count))==1 then
+    if count~=0 then -- prevent empty random interval
+      game.player.print(count)
+      game.player.print(math.random(game.difficulty+math.pow(count, 1/4)))
+    end
+    if count~=0 and math.random(game.difficulty+math.sqrt(count))==1 then
       table.insert(glob.hiveminds, game.createentity{name=event.entity.name, position=event.entity.position, force=game.player.force})
       for _, worm in pairs(worms) do worm.force=game.player.force end
       for _, hive in pairs(hives) do hive.force=game.player.force table.insert(glob.hiveminds, hive) end

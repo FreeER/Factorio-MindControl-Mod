@@ -16,13 +16,13 @@ data:extend({
     },
     collision_box = {{-1.4, -1.4}, {1.4, 1.4}},
     selection_box = {{-1.5, -1.5}, {1.5, 1.5}},
-    energy_per_sector = 20000,
+    energy_per_sector = "20KJ",
     max_distance_of_sector_revealed = 14,
-    energy_per_nearby_scan = 500,
+    energy_per_nearby_scan = "500J",
     energy_source =
     {
       type = "electric",
-      input_priority = "secondary",
+      usage_priority = "secondary-input"
     },
     energy_usage = "600W",
     pictures =

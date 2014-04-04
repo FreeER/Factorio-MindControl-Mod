@@ -1,3 +1,4 @@
+if data.raw.item["dna"] then dnaPrereqs = {"dna", "effect-transmission"} else dnaPrereqs = {"alien-technology", "effect-transmission"} end
 data:extend({
   {
     type = "technology",
@@ -7,7 +8,7 @@ data:extend({
     {
       {type = "unlock-recipe", recipe = "MBeacon"}
     },
-    prerequisites = {"alien-technology", "effect-transmission"},
+    prerequisites = dnaPrereqs,
     unit =
     {
       count = 50,
